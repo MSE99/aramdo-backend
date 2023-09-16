@@ -1,4 +1,4 @@
-import { removeTodoFromDB } from '../store/store'
+import { removeTodoFromDB } from '../store/store.js'
 
 export default {
     method: 'DELETE',

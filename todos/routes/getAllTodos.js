@@ -1,4 +1,4 @@
-import { getAllTodosFromDB } from '../store/store'
+import { getAllTodosFromDB } from '../store/store.js'
 
 export default {
     method: 'GET',

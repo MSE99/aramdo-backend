@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.23.2"
+    "fastify": "^4.23.2",
+    "fastify-graceful-shutdown": "^3.5.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",

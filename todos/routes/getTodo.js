@@ -1,4 +1,4 @@
-import { getTodoByIdFromDB } from '../store/store'
+import { getTodoByIdFromDB } from '../store/store.js'
 
 export default {
     method: 'GET',
