@@ -1,7 +1,7 @@
 import { createWithSize, unshift, filter, reduce } from './sizedList.js'
 import { hasSameId, selectId } from './todo.js'
 
-let store = createWithSize(1000)
+let store = createWithSize(10)
 
 export const insertTodoInDB = async todo => {
    const nextStore = unshift(store, todo)

@@ -1,3 +1,8 @@
 import createServer from 'fastify'
+import { TodoPlugin } from './todos/index.js'
 
-export const createApp = options => createServer({ logger: true, ...options })
+export const createApp = async options => {
+    const app = createServer({ logger: true, ...options })
+    await app.register(TodoPlugin)
+    return app
+}

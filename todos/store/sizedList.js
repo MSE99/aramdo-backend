@@ -19,6 +19,8 @@ export const selectItems = ({ items }) => items
 
 export const changeSize = (list, nextSize) => ({ size: nextSize, items: selectItems(list).slice(0, nextSize) })
 
+export const length = ({ items }) => items.length
+
 export const unshift = (list, ...items) => {
     const nextItems = [...items, ...list]
     return { ...list, items: nextItems.slice(0, selectSize(list)) }
