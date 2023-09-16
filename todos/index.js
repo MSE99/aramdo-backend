@@ -10,4 +10,16 @@ export async function TodoPlugin(app) {
     app.route(deleteTodo)
     app.route(createTodo)
     app.route(changeTodoStatus)
+
+    app.addHook('onRequest', async (request, reply) => {
+        const token = 
+            Object
+            .entries(request.headers)
+            .map(([key, value]) => [key.toLocaleLowerCase(), value])
+            .find(([key, _]) => key === 'user-token')
+        
+        if (!token || token[1] != 'gimmetasks@123') {
+            reply.code(401).send({ error: 'unauthorized' })
+        }
+    })
 }

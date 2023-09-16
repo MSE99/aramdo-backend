@@ -14,6 +14,15 @@ describe('todo routes', () => {
 
     afterEach(() => { __clearStore() })
 
+    it('should return 401 unauthorized if no user token is present.', async () => {
+        const { statusCode } = await app.inject({
+            url: '/todos',
+            method: 'GET',
+        })
+
+        expect(statusCode).toBe(401)
+    })
+
     it('should have a route for getting all todos.', async () => {
         const todos = [
             createTodo(1, 'foo'),
@@ -26,7 +35,10 @@ describe('todo routes', () => {
     
         const { body } = await app.inject({
             url: '/todos',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'User-Token': 'gimmetasks@123'
+            }
         })
 
         const gotten = JSON.parse(body).reverse().map(selectContent)
@@ -38,7 +50,10 @@ describe('todo routes', () => {
     it('GET /todo/:id should return bad request 400 when given a bad id.', async () => {
         const { statusCode } = await app.inject({
             url: '/todos/niz',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'User-Token': 'gimmetasks@123'
+            }
         })
         expect(statusCode).toBe(400)
     })
@@ -54,7 +69,10 @@ describe('todo routes', () => {
     
         const { statusCode, body } = await app.inject({
             url: '/todos/50',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'User-Token': 'gimmetasks@123'
+            }
         })
         expect(statusCode).toEqual(404)
         expect(body).toEqual(JSON.stringify({ error: 'not found' }))
@@ -69,7 +87,8 @@ describe('todo routes', () => {
                 content: 'foo',
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'User-Token': 'gimmetasks@123'
             }
         })
 
@@ -88,7 +107,8 @@ describe('todo routes', () => {
                 status: true,
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'User-Token': 'gimmetasks@123'
             }
         })
 
@@ -104,7 +124,8 @@ describe('todo routes', () => {
                 status: 'foo is great bar is none!',
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'User-Token': 'gimmetasks@123'
             }
         })
 
@@ -122,7 +143,8 @@ describe('todo routes', () => {
                 status: true,
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'User-Token': 'gimmetasks@123'
             }
         })
 
@@ -140,7 +162,10 @@ describe('todo routes', () => {
         
         const { statusCode } = await app.inject({
             url: `/todos/${selectId(todo)}`,
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'User-Token': 'gimmetasks@123'
+            }
         })
 
         expect(await getAllTodosFromDB()).toEqual([])
