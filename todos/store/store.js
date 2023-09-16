@@ -29,6 +29,6 @@ export const removeTodoFromDB = async id => {
     store = filter(store, todo => !hasSameId(todo, id))
 }
 
-export const getAllTodos = async () => Array.from(store)
+export const getAllTodosFromDB = async () => Array.from(store)
 
 export const __clearStore = async () => { store = createWithSize(1000) }

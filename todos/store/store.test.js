@@ -2,7 +2,7 @@ import { createTodo, selectId, updateTodoStatus } from './todo.js'
 
 import { 
     __clearStore,
-    getAllTodos,
+    getAllTodosFromDB,
     insertTodoInDB,
     updateTodoInDB,
     getTodoByIdFromDB,
@@ -17,7 +17,7 @@ describe('store', () => {
         const todo = createTodo(1, 'foo is great bar is none!')
         await insertTodoInDB(todo)
     
-        expect(await getAllTodos()).toEqual([todo])
+        expect(await getAllTodosFromDB()).toEqual([todo])
     })
 
     it('should allow us to update an existing todo.', async () => {
@@ -27,7 +27,7 @@ describe('store', () => {
         const updated = updateTodoStatus(todo, true)
         await updateTodoInDB(updated)
 
-        expect(await getAllTodos()).toEqual([updated])
+        expect(await getAllTodosFromDB()).toEqual([updated])
     })
 
     it('should allow us to get a todo by id.', async () => {

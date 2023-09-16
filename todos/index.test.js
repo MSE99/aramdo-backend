@@ -1,7 +1,7 @@
 import Fastify from 'fastify'
 import { TodoPlugin } from './index.js'
 import { createTodo, selectContent, selectId, selectStatus } from './store/todo.js'
-import { __clearStore, getAllTodos, getTodoByIdFromDB, insertTodoInDB } from './store/store.js'
+import { __clearStore, getAllTodosFromDB, getTodoByIdFromDB, insertTodoInDB } from './store/store.js'
 
 describe('todo routes', () => {
     let app
@@ -73,7 +73,7 @@ describe('todo routes', () => {
         })
 
         
-        const allTodos = (await getAllTodos()).map(selectContent)
+        const allTodos = (await getAllTodosFromDB()).map(selectContent)
         
         expect(statusCode).toEqual(201)
         expect(allTodos).toEqual(['foo'])
@@ -134,14 +134,14 @@ describe('todo routes', () => {
         const todo = createTodo(10, 'foo is great bar is none!')
         await insertTodoInDB(todo)
         
-        expect(await getAllTodos()).toEqual([todo])
+        expect(await getAllTodosFromDB()).toEqual([todo])
         
         const { statusCode } = await app.inject({
             url: `/todos/${selectId(todo)}`,
             method: 'DELETE'
         })
 
-        expect(await getAllTodos()).toEqual([])
+        expect(await getAllTodosFromDB()).toEqual([])
         expect(statusCode).toBe(203)
     })
 })
