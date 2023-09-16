@@ -52,11 +52,12 @@ describe('todo routes', () => {
         ]
         await Promise.all(todos.map(t => insertTodoInDB(t)))
     
-        const { statusCode } = await app.inject({
+        const { statusCode, body } = await app.inject({
             url: '/todos/50',
             method: 'GET'
         })
         expect(statusCode).toEqual(404)
+        expect(body).toEqual(JSON.stringify({ error: 'not found' }))
     })
 
 
@@ -80,7 +81,7 @@ describe('todo routes', () => {
     })
 
     it('PATCH /todo/:id should return not found when the todo cannot be found.', async () => {
-        const { statusCode } = await app.inject({
+        const { statusCode, body } = await app.inject({
             url: '/todos/15',
             method: 'PATCH',
             body: JSON.stringify({
@@ -92,6 +93,7 @@ describe('todo routes', () => {
         })
 
         expect(statusCode).toBe(404)
+        expect(body).toEqual(JSON.stringify({ error: 'not found' }))
     })
 
     it('PATCH /todo/:id should return bad request when status is not boolean.', async () => {
